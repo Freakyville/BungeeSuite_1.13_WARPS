@@ -7,6 +7,8 @@ import com.minecraftdimensions.bungeesuitewarps.commands.SetWarpCommand;
 import com.minecraftdimensions.bungeesuitewarps.commands.WarpCommand;
 import com.minecraftdimensions.bungeesuitewarps.listeners.WarpsListener;
 import com.minecraftdimensions.bungeesuitewarps.listeners.WarpsMessageListener;
+import com.minecraftdimensions.bungeesuitewarps.redis.RedisManager;
+import io.github.freakyville.utils.config.ConfigHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -17,6 +19,7 @@ public class BungeeSuiteWarps extends JavaPlugin {
     static String INCOMING_PLUGIN_CHANNEL = "bsuite:warps-out";
     public static BungeeSuiteWarps instance;
     public static boolean usingTeleports = false;
+    public static String server;
 
     @Override
     public void onEnable() {
@@ -30,6 +33,12 @@ public class BungeeSuiteWarps extends JavaPlugin {
                 usingTeleports = true;
             }
         }
+
+        ConfigHandler configHandler = new ConfigHandler(instance, "config.yml");
+
+        server = configHandler.getString("server");
+
+        RedisManager.getInstance().init(configHandler.getString("host"), configHandler.getString("password"), configHandler.getInt("port"), configHandler.getInt("timeout"));
     }
 
     private void registerCommands() {
@@ -40,10 +49,10 @@ public class BungeeSuiteWarps extends JavaPlugin {
     }
 
     private void registerChannels() {
-        Bukkit.getMessenger().registerIncomingPluginChannel(this,
-                INCOMING_PLUGIN_CHANNEL, new WarpsMessageListener());
-        Bukkit.getMessenger().registerOutgoingPluginChannel(this,
-                OUTGOING_PLUGIN_CHANNEL);
+//        Bukkit.getMessenger().registerIncomingPluginChannel(this,
+//                INCOMING_PLUGIN_CHANNEL, new WarpsMessageListener());
+//        Bukkit.getMessenger().registerOutgoingPluginChannel(this,
+//                OUTGOING_PLUGIN_CHANNEL);
     }
 
     private void registerListeners() {

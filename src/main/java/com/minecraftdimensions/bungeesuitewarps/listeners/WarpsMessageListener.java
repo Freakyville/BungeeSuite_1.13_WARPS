@@ -12,36 +12,36 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-public class WarpsMessageListener implements PluginMessageListener {
+public class WarpsMessageListener /*implements PluginMessageListener */{
 
-    @Override
-    public void onPluginMessageReceived( String channel, Player player, byte[] message ) {
-        DataInputStream in = new DataInputStream( new ByteArrayInputStream( message ) );
-        String task = null;
-
-        try {
-            task = in.readUTF();
-
-            if ( task.equals( "TeleportPlayerToLocation" ) ) {
-                WarpsManager.teleportPlayerToWarp( in.readUTF(), new Location( Bukkit.getWorld( in.readUTF() ), in.readDouble(), in.readDouble(), in.readDouble(), in.readFloat(), in.readFloat() ) );
-            }
-        } catch ( IOException e ) {
-            e.printStackTrace();
-        }
-        if ( task.equals( "GetVersion" ) ) {
-            String name = null;
-            try {
-                name = in.readUTF();
-            } catch ( IOException e ) {
-
-            }
-            if ( name != null ) {
-                Player p = Bukkit.getPlayer( name );
-                p.sendMessage( ChatColor.RED + "Warps - " + ChatColor.GOLD + BungeeSuiteWarps.instance.getDescription().getVersion() );
-            }
-            WarpsManager.sendVersion();
-            Bukkit.getConsoleSender().sendMessage( ChatColor.RED + "Warps - " + ChatColor.GOLD + BungeeSuiteWarps.instance.getDescription().getVersion() );
-        }
-
-    }
+//    @Override
+//    public void onPluginMessageReceived( String channel, Player player, byte[] message ) {
+//        DataInputStream in = new DataInputStream( new ByteArrayInputStream( message ) );
+//        String task = null;
+//
+//        try {
+//            task = in.readUTF();
+//
+//            if ( task.equals( "TeleportPlayerToLocation" ) ) {
+//                WarpsManager.teleportPlayerToWarp( in.readUTF(), new Location( Bukkit.getWorld( in.readUTF() ), in.readDouble(), in.readDouble(), in.readDouble(), in.readFloat(), in.readFloat() ) );
+//            }
+//        } catch ( IOException e ) {
+//            e.printStackTrace();
+//        }
+//        if ( task.equals( "GetVersion" ) ) {
+//            String name = null;
+//            try {
+//                name = in.readUTF();
+//            } catch ( IOException e ) {
+//
+//            }
+//            if ( name != null ) {
+//                Player p = Bukkit.getPlayer( name );
+//                p.sendMessage( ChatColor.RED + "Warps - " + ChatColor.GOLD + BungeeSuiteWarps.instance.getDescription().getVersion() );
+//            }
+//            WarpsManager.sendVersion();
+//            Bukkit.getConsoleSender().sendMessage( ChatColor.RED + "Warps - " + ChatColor.GOLD + BungeeSuiteWarps.instance.getDescription().getVersion() );
+//        }
+//
+//    }
 }
