@@ -32,25 +32,9 @@ public class WarpsManager {
         sb.append(player).append(";");
         sb.append(warp).append(";");
         sb.append(sender.hasPermission("bungeesuite.warps.warp." + warp.toLowerCase()) || sender.hasPermission("bungeesuite.warps.warp.*")).append(";");
-        sb.append(sender.hasPermission("bungeesuite.warps.bypass"));
+        sb.append(sender.hasPermission("bungeesuite.warps.bypass")).append(";");
+        sb.append(CooldownManager.getInstance().getCooldown("warp", sender));
         RedisManager.getInstance().publish(sb.toString(), "WARP_REQUEST");
-//        ByteArrayOutputStream b = new ByteArrayOutputStream();
-//        DataOutputStream out = new DataOutputStream(b);
-//        try {
-//            out.writeUTF("WarpPlayer");
-//            if (sender instanceof Player) {
-//                out.writeUTF(sender.getName());
-//            } else {
-//                out.writeUTF("CONSOLE");
-//            }
-//            out.writeUTF(player);
-//            out.writeUTF(warp);
-//            out.writeBoolean(sender.hasPermission("bungeesuite.warps.warp." + warp.toLowerCase()) || sender.hasPermission("bungeesuite.warps.warp.*"));
-//            out.writeBoolean(sender.hasPermission("bungeesuite.warps.bypass"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        new PluginMessageTask(b).runTaskAsynchronously(BungeeSuiteWarps.instance);
     }
 
     public static void setWarp(CommandSender sender, String name, boolean hidden, boolean global) {

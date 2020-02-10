@@ -7,10 +7,14 @@ import com.minecraftdimensions.bungeesuitewarps.commands.SetWarpCommand;
 import com.minecraftdimensions.bungeesuitewarps.commands.WarpCommand;
 import com.minecraftdimensions.bungeesuitewarps.listeners.WarpsListener;
 import com.minecraftdimensions.bungeesuitewarps.listeners.WarpsMessageListener;
+import com.minecraftdimensions.bungeesuitewarps.managers.CooldownManager;
 import com.minecraftdimensions.bungeesuitewarps.redis.RedisManager;
 import io.github.freakyville.utils.config.ConfigHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class BungeeSuiteWarps extends JavaPlugin {
 
@@ -37,6 +41,14 @@ public class BungeeSuiteWarps extends JavaPlugin {
         ConfigHandler configHandler = new ConfigHandler(instance, "config.yml");
 
         server = configHandler.getString("server");
+        Map<String, Map<String, Integer>> cooldowns = new HashMap<>();
+        for (String command : configHandler.getConfigSection("cooldowns").getKeys(false)) {
+            cooldowns.putIfAbsent(command, new HashMap<>());
+            for (String perm : configHandler.getConfigSection("cooldowns." + command).getKeys(false)) {
+                cooldowns.get(command).put(perm, configHandler.getInt("cooldowns." + command + "." + perm));
+            }
+        }
+        CooldownManager.getInstance().setCooldowns(cooldowns);
 
         RedisManager.getInstance().init(configHandler.getString("host"), configHandler.getString("password"), configHandler.getInt("port"), configHandler.getInt("timeout"));
     }
