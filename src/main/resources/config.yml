@@ -4,7 +4,7 @@ port: 3306
 timeout: 5000
 server: 'nprison'
 cooldowns: # tid er i sekunder!
-  'warp':
+  'warp': # permission:  bungeesuite.cooldown.x
     'perm.warp.notdonator': 15
     'perm.warp.donator1': 10
     'perm.warp.donator2': 5
