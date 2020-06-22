@@ -71,7 +71,7 @@ public class WarpsManager {
     }
 
     public static void teleportPlayerToWarp(final String player, Location location) {
-        Player p = Bukkit.getPlayer(player);
+        Player p = Bukkit.getPlayerExact(player);
         if (p != null) {
             p.teleport(location);
         } else {

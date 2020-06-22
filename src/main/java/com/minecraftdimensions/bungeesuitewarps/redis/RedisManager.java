@@ -61,7 +61,6 @@ public class RedisManager {
                 @Override
                 public void onMessage(String channel, String message) {
                     try {
-                        Bukkit.getLogger().info("WARP REDIS RESPONSE: " + message);
                         String[] args = message.split(";");
                         if (args[0].equalsIgnoreCase("TeleportPlayerToLocation")) {
                             if (args[1].equalsIgnoreCase(BungeeSuiteWarps.server)) {
